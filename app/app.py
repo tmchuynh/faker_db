@@ -57,7 +57,7 @@ def insert_fake_data():
                 # Insert into Person table
                 person_sql = """
                     INSERT INTO person (first_name, last_name, prefix, suffix, address, email, phone_number, ssn, license_plate)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
                 """
                 cursor.execute(person_sql, (first_name, last_name,  prefix, suffix, address, email, phone_number, ssn, license_plate))
 
@@ -69,14 +69,15 @@ def insert_fake_data():
                     job_title = fake.job()
                     company_name = fake.company()
                     job_address = fake.address().replace("\n", ", ")
-                    domain_name = fake.free_email().split('@')[-1]
+                    domain_name = fake.domain_name(2)
+                    company_phone = fake.phone_number()
 
                     # Insert into Job table with the person ID as a foreign key
                     job_sql = """
-                        INSERT INTO job (person_id, job_title, company_name, address, domain_name)
-                        VALUES (%s, %s, %s, %s, %s)
+                        INSERT INTO job (person_id, job_title, company_name, address, domain_name, company_phone)
+                        VALUES (%s, %s, %s, %s, %s, %s)
                     """
-                    cursor.execute(job_sql, (person_id, job_title, company_name, job_address, domain_name))
+                    cursor.execute(job_sql, (person_id, job_title, company_name, job_address, domain_name, company_phone))
 
         # Commit the transaction
         connection.commit()
