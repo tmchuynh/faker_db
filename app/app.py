@@ -45,6 +45,7 @@ def insert_fake_data():
             for _ in range(10):
                 # Generate fake data for person
                 first_name = fake.first_name()
+                last_name = fake.last_name()
                 prefix = fake.prefix()
                 suffix = fake.suffix()
                 address = fake.address().replace("\n", ", ")
@@ -55,10 +56,10 @@ def insert_fake_data():
 
                 # Insert into Person table
                 person_sql = """
-                    INSERT INTO person (first_name, prefix, suffix, address, email, phone_number, ssn, license_plate)
+                    INSERT INTO person (first_name, last_name, prefix, suffix, address, email, phone_number, ssn, license_plate)
                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
                 """
-                cursor.execute(person_sql, (first_name, prefix, suffix, address, email, phone_number, ssn, license_plate))
+                cursor.execute(person_sql, (first_name, last_name,  prefix, suffix, address, email, phone_number, ssn, license_plate))
 
                 # Get the last inserted person ID
                 person_id = cursor.lastrowid
