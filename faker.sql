@@ -8,17 +8,18 @@ CREATE TABLE IF NOT EXISTS person (
   suffix VARCHAR(10),
   address VARCHAR(255),
   email VARCHAR(255),
-  phone_number VARCHAR(20),
+  phone_number VARCHAR(100),
   ssn VARCHAR(20),
   license_plate VARCHAR(20)
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS job (
   id INT AUTO_INCREMENT PRIMARY KEY,
+  person_id INT,
   job_title VARCHAR(255),
   company_name VARCHAR(255),
-  phone_number VARCHAR(20),
+  phone_number VARCHAR(100),
   address VARCHAR(255),
   domain_name VARCHAR(255),
-  CONSTRAINT job_id FOREIGN KEY (id) REFERENCES person (id) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT person_id FOREIGN KEY (id) REFERENCES person (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
