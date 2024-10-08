@@ -11,34 +11,37 @@ def generate_data_clean():
     try:
         for _ in range(10):
             # Create a new Person instance with fake data
-            person = Person(
-                first_name=fake.first_name(),
-                last_name=fake.last_name(),
-                prefix=fake.prefix(),
-                suffix=fake.suffix(),
-                address=fake.address().replace("\n", ", "),
-                email=fake.free_email(),
-                phone_number=fake.phone_number(),
-                ssn=fake.ssn(),
-                license_plate=fake.license_plate()
+            data = {
+                'first_name': fake.first_name(),
+                'last_name': fake.last_name(),
+                'prefix': fake.prefix(),
+                'suffix': fake.suffix(),
+                'address': fake.address().replace("\n", ", "),
+                'email': fake.free_email(),
+                'phone_number': fake.phone_number(),
+                'ssn': fake.ssn(),
+                'license_plate': fake.license_plate()
+            }
+            person = Person.save(
+                data, cursor
             )
-            # Save the person and retrieve their ID
-            last_person_id = person.save(cursor)
-            print(last_person_id)
+            # # Save the person and retrieve their ID
+            # last_person_id = person.save(cursor)
+            # print(last_person_id)
 
-            # Create multiple Job instances for this person
-            for _ in range(fake.random_int(min=1, max=3)):
-                job = Job(
-                    person_id=last_person_id,  # Ensure this person_id exists in the person table
-                    job_title=fake.job(),
-                    company_name=fake.company(),
-                    phone_number=fake.phone_number(),
-                    address=fake.address().replace("\n", ", "),
-                    domain_name=fake.domain_name()
-                )
-                job.save(cursor)
+            # # Create multiple Job instances for this person
+            # for _ in range(fake.random_int(min=1, max=3)):
+            #     job = Job(
+            #         person_id=last_person_id,  # Ensure this person_id exists in the person table
+            #         job_title=fake.job(),
+            #         company_name=fake.company(),
+            #         phone_number=fake.phone_number(),
+            #         address=fake.address().replace("\n", ", "),
+            #         domain_name=fake.domain_name()
+            #     )
+            #     job.save(cursor)
 
-            db.commit()  # Commit after each batch of person/job entries
+            # db.commit()  # Commit after each batch of person/job entries
 
         return jsonify({"message": "Fake data inserted into the database successfully!"}), 200
     except Exception as e:
