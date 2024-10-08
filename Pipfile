@@ -5,9 +5,10 @@ name = "pypi"
 
 [packages]
 flask = "*"
-faker = "*"
 mysql-connector-python = "*"
 python-dotenv = "*"
+pymysql = "*"
+faker = "*"
 
 [dev-packages]
 
